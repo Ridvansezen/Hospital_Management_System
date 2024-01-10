@@ -25,7 +25,18 @@ SECRET_KEY = 'django-insecure-a3l1+ysjamt88_awv&&2y!0b193-12*8sq$k0@_o#=sb9r1912
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+}
+
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_SECURE = True
+
 
 
 # Application definition
@@ -37,8 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user',
+    'userApp',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +87,19 @@ WSGI_APPLICATION = 'hospital_management_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hospital_management_system',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,9 +130,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'tr'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Istanbul'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -120,10 +145,10 @@ USE_TZ = True
 import os
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
+"""STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
+"""
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
