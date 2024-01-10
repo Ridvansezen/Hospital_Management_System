@@ -4,15 +4,23 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
-User = UserModel
-
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, style={'input_type': 'password'}, validators=[MinLengthValidator(limit_value=8), MaxLengthValidator(limit_value=24)])
+    password_confirmation = serializers.CharField(write_only=True, style={'input_type': 'password'}, validators=[MinLengthValidator(limit_value=8), MaxLengthValidator(limit_value=24)])
 
     class Meta:
-        model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'phone_number', 'email', 'gender', 'password')
+        model = UserModel
+        fields = ('id', 'username', 'first_name', 'last_name', 'phone_number', 'email', 'gender', 'password', 'password_confirmation')
         extra_kwargs = {'password': {'write_only': True}}
+
+    def validate(self, data):
+        password = data.get('password')
+        password_confirmation = data.get('password_confirmation')
+
+        if password and password_confirmation and password != password_confirmation:
+            raise serializers.ValidationError("Password and password confirmation do not match.")
+
+        return data
 
     def create(self, validated_data):
         user = UserModel.objects.create_user(
