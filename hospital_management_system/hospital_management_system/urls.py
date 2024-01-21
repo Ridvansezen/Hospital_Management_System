@@ -21,6 +21,7 @@ from userApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include("userApp.urls")),
+    path('api/', include("doctorsApp.urls")),
     path('', views.HomePageView.as_view(), name='home_page'),
 ]
 from django.conf import settings
