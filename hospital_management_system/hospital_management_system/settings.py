@@ -32,10 +32,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
 }
-
-CSRF_USE_SESSIONS = True
-CSRF_COOKIE_SECURE = True
 
 
 
@@ -49,8 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'userApp',
+    'doctorsApp',
     'rest_framework',
     'rest_framework.authtoken',
+    'debug_toolbar',
+    'django_extensions',
+    'patients',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +65,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+"""DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+}"""
 
 ROOT_URLCONF = 'hospital_management_system.urls'
 

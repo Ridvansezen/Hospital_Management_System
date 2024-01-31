@@ -4,7 +4,8 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
-class UserSerializer(serializers.ModelSerializer):
+
+class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, style={'input_type': 'password'}, validators=[MinLengthValidator(limit_value=8), MaxLengthValidator(limit_value=24)])
     password_confirmation = serializers.CharField(write_only=True, style={'input_type': 'password'}, validators=[MinLengthValidator(limit_value=8), MaxLengthValidator(limit_value=24)])
 
@@ -33,3 +34,24 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
         )
         return user
+    
+
+from django.contrib.auth import authenticate
+
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'}, validators=[MinLengthValidator(limit_value=8), MaxLengthValidator(limit_value=24)])
+
+    def validate(self, data):
+        username = data.get('username')
+        password = data.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user and user.is_active:
+            return data
+        raise serializers.ValidationError("Invalid credentials.")
+    
+    
+
+
