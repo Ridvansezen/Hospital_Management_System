@@ -42,6 +42,9 @@ class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True, style={'input_type': 'password'}, validators=[MinLengthValidator(limit_value=8), MaxLengthValidator(limit_value=24)])
 
+    class Meta:
+        fields = ['username', 'password']
+
     def validate(self, data):
         username = data.get('username')
         password = data.get('password')
@@ -49,9 +52,8 @@ class UserLoginSerializer(serializers.Serializer):
         user = authenticate(username=username, password=password)
 
         if user and user.is_active:
-            return data
+            return {'username': username, 'password': password}
         raise serializers.ValidationError("Invalid credentials.")
-    
     
 
 

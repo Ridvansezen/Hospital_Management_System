@@ -21,7 +21,7 @@ class PatientAppointmentSerializer(serializers.ModelSerializer):
 class DoctorAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        fields = ['id', 'name']
+        fields = ["name", "specialization"]
 
 class AppointmentSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
@@ -37,10 +37,11 @@ class CustomAppointmentSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     patient_name = serializers.SerializerMethodField(read_only=True)
     doctor_name = serializers.CharField(source='doctor.name', read_only=True)
+    doctor_specialization = serializers.CharField(source="doctor.specialization", read_only=True)
 
     class Meta:
         model = Appointment
-        fields = ['id', 'patient_name', 'doctor_name', 'appointment_date', 'appointment_time', 'created_at']
+        fields = ['id', 'patient_name', 'doctor_name',"doctor_specialization" , 'appointment_date', 'appointment_time', 'created_at']
 
     def get_patient_name(self, obj):
         return f"{obj.patient.first_name} {obj.patient.last_name}"

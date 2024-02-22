@@ -2,15 +2,12 @@ from django.urls import path
 from patients import views
 
 urlpatterns = [    
-    path('patients/', views.PatientListViewSet.as_view(), name='patients'),
-    path('patients/<int:patient_id>/', views.PatientDetailViewSet.as_view(), name='patient_detail'),
-    path('patients/create/', views.PatientCreateViewSet.as_view(), name='patient_create'),
-    path('patients/update/<int:id>', views.UpdatePatientViewSet.as_view(), name='patient_update'),
-    path('patients/delete/<int:id>', views.DeletePatientViewSet.as_view(), name='patient_delete'),
+    path('patients/', views.PatientViewSet.as_view({'get': 'patients'}), name='patients'),
+    path('patients/<int:patient_id>/', views.PatientViewSet.as_view({'get': 'patient_detail'}), name='patient_detail'),
+    path('patients/create/', views.PatientViewSet.as_view({'post': 'patient_create'}), name='patient_create'),
+    path('patients/update/<int:id>', views.PatientViewSet.as_view({'post': 'patient_update'}), name='patient_update'),
+    path('patients/delete/<int:id>', views.PatientViewSet.as_view({'post': 'patient_delete'}), name='patient_delete'),
     
-    path('appointments/', views.AppointmentListView.as_view(), name='appointment_list'),
-    path('appointments/<int:appointment_id>/', views.AppointmentDetailView.as_view(), name='appointment_detail'),
-    path('appointments/create/', views.CreateAppointmentView.as_view(), name='appointment_create'),
-    path('appointments/update/<int:id>/', views.UpdateAppointmentView.as_view(), name='appointment_update'),
-    path('appointments/delete/<int:id>', views.DeleteAppointmentView.as_view(), name='appointment_delete'),
+    path('appointments/', views.AppointmentViewSet.as_view({'get': 'list', 'post': 'create'}), name='appointment_list'),
+    path('appointments/<int:id>/', views.AppointmentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='appointment_detail'),
 ]
