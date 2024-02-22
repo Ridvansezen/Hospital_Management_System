@@ -59,6 +59,11 @@ INSTALLED_APPS = [
     'patients',
 ]
 
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
