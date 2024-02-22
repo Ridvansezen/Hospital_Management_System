@@ -13,3 +13,7 @@ hospital_management_system/doctorsApp/__pycache__
 hospital_management_system/patients/__pycache__
 
 hospital_management_system/patients/migrations
+
+hospital_management_system/doctorsApp/__pycache__
+
+hospital_management_system/doctorsApp/migrations

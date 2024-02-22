@@ -11,8 +11,8 @@ from django.core.validators import MinLengthValidator
 class UserModel(AbstractUser, PermissionsMixin):
     username = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    phone_number = models.IntegerField(blank=True, null=True)
+    last_name = models.CharField(max_length=30)    
+    phone_number = models.CharField(max_length = 15, blank=True, null=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     GENDER_CHOICES = [
         ('male', 'Male'),

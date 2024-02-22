@@ -23,7 +23,7 @@ urlpatterns = [
     path('api/user/', include("userApp.urls")),
     path('api/', include("patients.urls")),
     path('api/', include("doctorsApp.urls")),
-    path('', views.HomePageView.as_view(), name='home_page'),
+    path('', views.UserViewSet.as_view({'get': 'home_page'}), name='home_page'),
 ]
 from django.conf import settings
 
